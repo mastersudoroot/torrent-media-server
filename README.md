@@ -1,2 +1,2 @@
-# TORRENT MEDIA SERVER
+# Torrent-Media-Server
 Torrent Downloader and Streaming Platform
