@@ -39,14 +39,14 @@ colorEcho() {
 
 #System Requirement
 if [[ $(id -u) != 0 ]]; then
-  colorEcho() ${ERROR} "Please run this script as root!"
+  colorEcho() $ERROR "Please run this script as root!"
   exit 1
 fi
 
 initial() {
 set +e
 clear
-colorEcho ${INFO} "Check new packages update"
+colorEcho $INFO "Check new packages update"
 if cat /etc/*release | grep ^NAME | grep -q Ubuntu; then 
 dist="ubuntu"
 apt update
@@ -56,14 +56,14 @@ dist="debian"
 apt update
 apt upgrade -y
 fi
-if [[ ${dist} = debian ]]; then 
+if [[ $dist = debian ]]; then 
 dpkg-reconfigure tzdata
 apt purge ntp -y
 systemctl start systemd-timesyncd
 timedatectl
 date
 sleep 3
-elif [[ ${dist} = ubuntu ]]; then 
+elif [[ $dist = ubuntu ]]; then 
 dpkg-reconfigure tzdata
 systemctl start systemd-timesyncd
 timedatectl
@@ -87,7 +87,7 @@ fi
 base() {
 set +e
 apt update
-colorEcho ${INFO} "Installing all necessary packages"
+colorEcho $INFO "Installing all necessary packages"
 apt install curl wget git zip unzip tar ufw neofetch -y
 clear
 }
@@ -123,12 +123,12 @@ rm -r nginx-config.sh
 }
 
 menu() {
-colorEcho ${INFO} "===================="
-colorEcho ${INFO} "TORRENT MEDIA SSRVER"
-colorEcho ${INFO} "===================="
-colorEcho ${INFO} " [1] RUN INSTALL"
-colorEcho ${INFO} " [2] EXIT SCRIPT"
-colorEcho ${INFO} " ENTER OPTION: "
+colorEcho $INFO "===================="
+colorEcho $INFO "TORRENT MEDIA SSRVER"
+colorEcho $INFO "===================="
+colorEcho $INFO " [1] RUN INSTALL"
+colorEcho $INFO " [2] EXIT SCRIPT"
+colorEcho $INFO " ENTER OPTION: "
 case $option in 
 1) initial 
    base
