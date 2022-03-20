@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-domain=${hostname -f}
+domain=$(hostname -f)
 
 apt install libowfat-dev make git build-essential zlib1g-dev libowfat-dev make git -y
 useradd -r opentracker --shell=/usr/sbin/nologin
@@ -15,7 +15,7 @@ sed -i 's/#FEATURES+=-DWANT_SYSLOGS/FEATURES+=-DWANT_SYSLOGS/' Makefile
 sed -i 's/#FEATURES+=-DWANT_FULLLOG_NETWORKS/FEATURES+=-DWANT_FULLLOG_NETWORKS/' Makefile
 make
 cp -f opentracker /usr/sbin/opentracker
-  cat > '/etc/systemd/system/tracker.service' << EOF
+cat > '/etc/systemd/system/tracker.service' << EOF
 [Unit]
 Description=Bittorrent-Tracker Daemon Service
 Documentation=https://erdgeist.org/arts/software/opentracker/
@@ -42,7 +42,7 @@ systemctl restart tracker
 cd /usr/share/nginx/
 mkdir tracker
 cd /usr/share/nginx/tracker/
-  cat > 'stats.js' << EOF
+cat > 'stats.js' << EOF
 function addDataToPage(xmlDocument, type) {
   const torrents = xmlDocument.querySelector("torrents count_mutex").textContent;
   const peers = xmlDocument.querySelector("peers count").textContent;
@@ -75,8 +75,7 @@ window.setInterval(function(){
 }, 1000);
 EOF
 
-  cat > 'index.html' << EOF
-
+cat > 'index.html' << EOF
 <!doctype html>
 <html lang="zh-tw">
 <head>
