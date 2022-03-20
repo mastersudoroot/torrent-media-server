@@ -3,6 +3,7 @@
 apt install ca-certificates lsb-release -y 
 apt install gnupg gnupg2 -y 
 touch /etc/apt/sources.list.d/nginx.list
+
 if [[ ${dist} == ubuntu ]]; then
 echo "deb [arch=amd64] http://nginx.org/packages/mainline/ubuntu `lsb_release -cs` nginx"  | sudo tee /etc/apt/sources.list.d/nginx.list
 else 
@@ -10,15 +11,18 @@ cat > '/etc/apt/sources.list.d/nginx.list' << EOF
 deb https://nginx.org/packages/mainline/${dist}/ $(lsb_release -cs) nginx
 EOF
 fi
+
 curl -fsSL https://nginx.org/keys/nginx_signing.key | apt-key add - 
 #apt-key fingerprint ABF5BD827BD9BF62
 apt update
 sh -c 'echo "y\n\ny\ny\ny\n" | apt-get install nginx -y' 
 id -u nginx
+
 if [[ $? != 0 ]]; then
 useradd -r nginx --shell=/usr/sbin/nologin
 apt install nginx -y
 fi
+
 cat > '/lib/systemd/system/nginx.service' << EOF
 [Unit]
 Description=The NGINX HTTP and reverse proxy server
@@ -42,6 +46,7 @@ systemctl daemon-reload
 systemctl enable nginx
 mkdir /usr/share/nginx/cache
 #mkdir /usr/share/nginx/php_cache
+
 cat > '/etc/nginx/nginx.conf' << EOF
 user nginx;
 worker_processes auto;
