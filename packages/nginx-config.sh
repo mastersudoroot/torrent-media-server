@@ -1,12 +1,12 @@
 #!/bin/bash 
 
-domain=${hostname -f}
+domain=$(hostname -f)
 
 rm -rf /etc/nginx/sites-available/*
 rm -rf /etc/nginx/sites-enabled/*
 rm -rf /etc/nginx/conf.d/*
 touch /etc/nginx/conf.d/default.conf
-  cat > '/etc/nginx/conf.d/default.conf' << EOF
+cat > '/etc/nginx/conf.d/default.conf' << EOF
 server {
   listen 127.0.0.1:81 fastopen=20 reuseport default_server so_keepalive=on;
   listen 127.0.0.1:82 http2 fastopen=20 reuseport default_server so_keepalive=on;
@@ -29,28 +29,12 @@ server {
   }
 EOF
 
-# echo "    location /jellyfin {" >> /etc/nginx/conf.d/default.conf
-# echo "        return 302 https://${domain}:443/jellyfin/;" >> /etc/nginx/conf.d/default.conf
-# echo "    }" >> /etc/nginx/conf.d/default.conf
-# echo "    location /jellyfin/ {" >> /etc/nginx/conf.d/default.conf
-# echo "        #access_log off;" >> /etc/nginx/conf.d/default.conf
-# echo "        proxy_pass http://127.0.0.1:8099/jellyfin/;" >> /etc/nginx/conf.d/default.conf
-# echo "        proxy_pass_request_headers on;" >> /etc/nginx/conf.d/default.conf
-# echo "        proxy_set_header Host \$host;" >> /etc/nginx/conf.d/default.conf
-# echo "        proxy_set_header X-Real-IP \$remote_addr;" >> /etc/nginx/conf.d/default.conf
-# echo "        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;" >> /etc/nginx/conf.d/default.conf
-# echo "        proxy_set_header X-Forward-Proto https;" >> /etc/nginx/conf.d/default.conf
-# echo "        proxy_set_header X-Forwarded-Host \$http_host;" >> /etc/nginx/conf.d/default.conf
-# echo "        proxy_set_header Upgrade \$http_upgrade;" >> /etc/nginx/conf.d/default.conf
-# echo "        proxy_set_header Connection \$http_connection;" >> /etc/nginx/conf.d/default.conf
-# echo "        proxy_buffering off;" >> /etc/nginx/conf.d/default.conf
-# echo "        }" >> /etc/nginx/conf.d/default.conf
-echo "    location /emby {" >> /etc/nginx/conf.d/default.conf
-echo "        return 302 https://${domain}:443/emby/;" >> /etc/nginx/conf.d/default.conf
+echo "    location /jellyfin {" >> /etc/nginx/conf.d/default.conf
+echo "        return 302 https://$domain:443/jellyfin/;" >> /etc/nginx/conf.d/default.conf
 echo "    }" >> /etc/nginx/conf.d/default.conf
-echo "    location /emby/ {" >> /etc/nginx/conf.d/default.conf
+echo "    location /jellyfin/ {" >> /etc/nginx/conf.d/default.conf
 echo "        #access_log off;" >> /etc/nginx/conf.d/default.conf
-echo "        proxy_pass http://127.0.0.1:8096/;" >> /etc/nginx/conf.d/default.conf
+echo "        proxy_pass http://127.0.0.1:8099/jellyfin/;" >> /etc/nginx/conf.d/default.conf
 echo "        proxy_pass_request_headers on;" >> /etc/nginx/conf.d/default.conf
 echo "        proxy_set_header Host \$host;" >> /etc/nginx/conf.d/default.conf
 echo "        proxy_set_header X-Real-IP \$remote_addr;" >> /etc/nginx/conf.d/default.conf
@@ -61,13 +45,29 @@ echo "        proxy_set_header Upgrade \$http_upgrade;" >> /etc/nginx/conf.d/def
 echo "        proxy_set_header Connection \$http_connection;" >> /etc/nginx/conf.d/default.conf
 echo "        proxy_buffering off;" >> /etc/nginx/conf.d/default.conf
 echo "        }" >> /etc/nginx/conf.d/default.conf
+# echo "    location /emby {" >> /etc/nginx/conf.d/default.conf
+# echo "        return 302 https://${domain}:443/emby/;" >> /etc/nginx/conf.d/default.conf
+# echo "    }" >> /etc/nginx/conf.d/default.conf
+# echo "    location /emby/ {" >> /etc/nginx/conf.d/default.conf
+# echo "        #access_log off;" >> /etc/nginx/conf.d/default.conf
+# echo "        proxy_pass http://127.0.0.1:8096/;" >> /etc/nginx/conf.d/default.conf
+# echo "        proxy_pass_request_headers on;" >> /etc/nginx/conf.d/default.conf
+# echo "        proxy_set_header Host \$host;" >> /etc/nginx/conf.d/default.conf
+# echo "        proxy_set_header X-Real-IP \$remote_addr;" >> /etc/nginx/conf.d/default.conf
+# echo "        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;" >> /etc/nginx/conf.d/default.conf
+# echo "        proxy_set_header X-Forward-Proto https;" >> /etc/nginx/conf.d/default.conf
+# echo "        proxy_set_header X-Forwarded-Host \$http_host;" >> /etc/nginx/conf.d/default.conf
+# echo "        proxy_set_header Upgrade \$http_upgrade;" >> /etc/nginx/conf.d/default.conf
+# echo "        proxy_set_header Connection \$http_connection;" >> /etc/nginx/conf.d/default.conf
+# echo "        proxy_buffering off;" >> /etc/nginx/conf.d/default.conf
+# echo "        }" >> /etc/nginx/conf.d/default.conf
 
-echo "    location /speedtest/ {" >> /etc/nginx/conf.d/default.conf
-echo "        #access_log off;" >> /etc/nginx/conf.d/default.conf
-echo "        client_max_body_size 0;" >> /etc/nginx/conf.d/default.conf
-echo "        alias /usr/share/nginx/speedtest/;" >> /etc/nginx/conf.d/default.conf
-echo "        http2_push /speedtest/speedtest.js;" >> /etc/nginx/conf.d/default.conf
-echo "        http2_push /speedtest/favicon.ico;" >> /etc/nginx/conf.d/default.conf
+# echo "    location /speedtest/ {" >> /etc/nginx/conf.d/default.conf
+# echo "        #access_log off;" >> /etc/nginx/conf.d/default.conf
+# echo "        client_max_body_size 0;" >> /etc/nginx/conf.d/default.conf
+# echo "        alias /usr/share/nginx/speedtest/;" >> /etc/nginx/conf.d/default.conf
+# echo "        http2_push /speedtest/speedtest.js;" >> /etc/nginx/conf.d/default.conf
+# echo "        http2_push /speedtest/favicon.ico;" >> /etc/nginx/conf.d/default.conf
 echo "        location ~ \.php\$ {" >> /etc/nginx/conf.d/default.conf
 echo "        fastcgi_split_path_info ^(.+\.php)(/.+)\$;" >> /etc/nginx/conf.d/default.conf
 echo "        fastcgi_param HTTPS on;" >> /etc/nginx/conf.d/default.conf
