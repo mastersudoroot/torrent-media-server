@@ -1,10 +1,10 @@
 #!/bin/bash
 
-apt install -y apt-transport-https
+apt install apt-transport-https -y
 wget -O - https://repo.jellyfin.org/jellyfin_team.gpg.key | sudo apt-key add -
 echo "deb [arch=$( dpkg --print-architecture )] https://repo.jellyfin.org/$( awk -F'=' '/^ID=/{ print $NF }' /etc/os-release ) $( awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release ) main" | sudo tee /etc/apt/sources.list.d/jellyfin.list
-apt-get update
-apt-get install -y jellyfin
+apt update
+apt install jellyfin -y
 sed -i "s/<BaseUrl \/>/<BaseUrl>\/jellyfin\/<\/BaseUrl>/g" /etc/jellyfin/system.xml
 sed -i "s/<EnableIPV6>false<\/EnableIPV6>/<EnableIPV6>true<\/EnableIPV6>/g" /etc/jellyfin/system.xml
 sed -i "s/<EnableRemoteAccess>true<\/EnableRemoteAccess>/<EnableRemoteAccess>false<\/EnableRemoteAccess>/g" /etc/jellyfin/system.xml
