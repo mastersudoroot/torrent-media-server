@@ -12,7 +12,7 @@ chmod +x /usr/bin/qbittorrent-nox
 chmod +x /usr/bin/qb*
 cd /root
 rm -rf /root/qbt
-  cat > '/etc/systemd/system/qbittorrent.service' << EOF
+cat > '/etc/systemd/system/qbittorrent.service' << EOF
 [Unit]
 Description=qBittorrent Daemon Service
 Documentation=https://github.com/c0re100/qBittorrent-Enhanced-Edition
