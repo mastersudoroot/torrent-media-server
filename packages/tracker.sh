@@ -42,6 +42,7 @@ systemctl restart tracker
 cd /usr/share/nginx/
 mkdir tracker
 cd /usr/share/nginx/tracker/
+
 cat > 'stats.js' << EOF
 function addDataToPage(xmlDocument, type) {
   const torrents = xmlDocument.querySelector("torrents count_mutex").textContent;
